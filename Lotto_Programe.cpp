@@ -149,7 +149,6 @@ void counts(vector<UserLotto> user, LottoGenerator lotto){
 }
 
 int main(){
-    cout<<RAND_MAX<<"\n";
     vector<UserLotto> user;//구입한 로또 저장
     int userCount;//구입한 로또의 개수
     int pos = 1;
