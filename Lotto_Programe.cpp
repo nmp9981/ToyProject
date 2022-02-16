@@ -13,7 +13,7 @@ void PrintElement(int n){
 //로또 번호를 저장하는 클래스
 class LottoGenerator{
     public : 
-        vector<int> ball;//로또를 저장할 벡터 선언
+        vector<int> ball;//로또 번호를 저장할 벡터 선언
         
         LottoGenerator(int count){
             makeRandom(count);
@@ -24,11 +24,11 @@ class LottoGenerator{
         }
         //1~45숫자 6개 고르기
         set<int> RangedRandDemo(int range_min,int range_max,int n){
-            set<int> s;
+            set<int> s;//중복 방지를 위해 set사용
             while(1){
                 int u = (double)rand()/RAND_MAX*(range_max-range_min)+range_min;
                 s.insert(u);
-                if(s.size()>=n){//모두 뽑음
+                if(s.size()>=n){//6개 모두 뽑음
                     break;
                 }
             }
@@ -53,7 +53,7 @@ class LottoGenerator{
 //응모한 번호 저장
 class UserLotto{
     public : 
-        int pos;
+        int pos;//복권의 번호(순서)
         LottoGenerator lotto;//구입한 로또 객체 선언
         int grade;//등수
         
@@ -63,40 +63,52 @@ class UserLotto{
 };
 
 void line(){
-    cout<<"*******************************************************\n";
+    cout<<"************************************************************\n";
 }
 
 void title(){
     cout<<"로또 복권 모의실험 프로그램\n";
     line();
-    cout<<"1등 6개 숫자 일치 (보너스 숫자 제외) :총 상금은 1,800,000,000메소\n";
-    cout<<"2등 6개 중 5개 일치 + 1개 보너스 숫자 일치 :총 상금은 100,000,000메소\n";
-    cout<<"3등 5개 숫자 일치 (보너스 숫자 제외):총 상금은 30,000,000메소\n";
-    cout<<"4등 4개 숫자 일치 (보너스 숫자 제외):총 상금은 12,000,000메소\n";
-    cout<<"5등 3개 숫자 일치 (보너스 숫자 제외):총 상금은 10,000메소\n";
+    cout<<"1등 6개 숫자 일치 (보너스 숫자 제외) :총 상금은 2,100,000,000메소\n";
+    cout<<"2등 6개 중 5개 일치 + 1개 보너스 숫자 일치 :총 상금은 400,000,000메소\n";
+    cout<<"3등 5개 숫자 일치 (보너스 숫자 제외):총 상금은 70,000,000메소\n";
+    cout<<"4등 4개 숫자 일치 (보너스 숫자 제외):총 상금은 18,000,000메소\n";
+    cout<<"5등 3개 숫자 일치 (보너스 숫자 제외):총 상금은 500,000메소\n";
+    cout<<"6등 2개 숫자 일치 (보너스 숫자 제외):총 상금은 100,000메소\n";
+    cout<<"7등 1개 숫자 일치 (보너스 숫자 제외):총 상금은 15,000메소\n";
+    cout<<"8등 0개 숫자 일치 (보너스 숫자 제외):총 상금은 0메소\n";
     line();
 }
 //실제 수령 상금 출력
 void Lotto(UserLotto user){
     switch(user.grade){
         case 1:
-            cout<<"1등(총 상금 1,800,000,000메소):";
+            cout<<"1등(총 상금 2,100,000,000메소):";
             break;
         case 2:
-            cout<<"2등(총 상금 100,000,000메소):";
+            cout<<"2등(총 상금 400,000,000메소):";
             break;
         case 3:
-            cout<<"3등(총 상금 30,000,000메소):";
+            cout<<"3등(총 상금 70,000,000메소):";
             break;
         case 4:
-            cout<<"4등(총 상금 12,000,000메소):";
+            cout<<"4등(총 상금 18,000,000메소):";
             break;
         case 5:
-            cout<<"5등(총 상금 10,000메소):";
+            cout<<"5등(총 상금 500,000메소):";
+            break;
+        case 6:
+            cout<<"6등(총 상금 100,000메소):";
+            break;
+        case 7:
+            cout<<"7등(총 상금 15,000메소):";
+            break;
+        case 8:
+            cout<<"8등(총 상금 0메소):";
             break;
     }
     //당첨되면
-    if(user.grade>=1 && user.grade<=5){
+    if(user.grade>=1 && user.grade<=8){
         cout<<"\n NO "<<user.pos<<" : ";
         user.lotto.lottprn();
     }
@@ -105,13 +117,14 @@ void Lotto(UserLotto user){
 void counts(vector<UserLotto> user, LottoGenerator lotto){
     int matchingcount;//일치하는 개수 
     vector<int>::iterator num1,num2;
+    //1~userCount번까지의 유저의 입력
     for(int i=0;i<user.size();i++){
         matchingcount = 0;
         //당첨번호 6개로 반복문을 돌림
         for(num1=lotto.ball.begin();num1<lotto.ball.end()-1;num1++){
             //응모한 번호 6개로 반복문을 돌림
             for(num2=user[i].lotto.ball.begin();num2<user[i].lotto.ball.end();num2++){
-                if(*num1 < *num2){
+                if(*num1 < *num2){//주복 확인 방지
                     break;
                 }
                 if(*num1 == *num2){
@@ -119,8 +132,17 @@ void counts(vector<UserLotto> user, LottoGenerator lotto){
                 }
             }
         }
-        
+        //몇개가 일치하는가?
         switch(matchingcount){
+            case 0:
+                user[i].grade = 8;
+                break;
+            case 1:
+                user[i].grade = 7;
+                break;
+            case 2:
+                user[i].grade = 6;
+                break;
             case 3:
                 user[i].grade = 5;
                 break;
