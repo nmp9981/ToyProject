@@ -7,7 +7,7 @@
 using namespace std;
 typedef long long ll;
 //전역 변수
-ll money[9] = {0,30000000000,2100000000,270000000,35000000,3700000,180000,33000,0};
+ll money[9] = {0,30000000000,6300000000,800000000,70000000,6000000,500000,50000,0};
 
 void PrintElement(int n){
     cout<<n<<"\t";
@@ -66,7 +66,7 @@ class UserLotto{
 };
 
 void line(){
-    cout<<"************************************************************\n";
+    cout<<"***************************************************************\n";
 }
 
 void title(){
@@ -89,6 +89,7 @@ ll Lotto(UserLotto user){
 
 //응모한 당첨번호와 일치되는 개수로 등수를 구함
 void counts(vector<UserLotto> user, LottoGenerator lotto){
+    ll lotto_money = 40000*user.size();//로또 가격
     ll total_money = 0;//총 수령액
     int matchingcount;//일치하는 개수 
     vector<int>::iterator num1,num2;
@@ -143,7 +144,8 @@ void counts(vector<UserLotto> user, LottoGenerator lotto){
         }
         total_money+=Lotto(user[i]);
     }
-    cout<<"총 수령액 : "<<total_money<<"메소\n";
+    cout<<"지불 액 : "<<lotto_money<<"총 수령액 : "<<total_money<<"메소\n";
+    cout<<"이익 : "<<total_money-lotto_money<<"메소\n";
 }
 
 int main(){
