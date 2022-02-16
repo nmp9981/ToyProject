@@ -5,6 +5,9 @@
 #include <time.h>
 #include <algorithm>
 using namespace std;
+typedef long long ll;
+//전역 변수
+ll money[9] = {0,4200000000,750000000,130000000,30000000,1700000,130000,27000,0};
 
 void PrintElement(int n){
     cout<<n<<"\t";
@@ -69,52 +72,24 @@ void line(){
 void title(){
     cout<<"로또 복권 모의실험 프로그램\n";
     line();
-    cout<<"1등 6개 숫자 일치 (보너스 숫자 제외) :총 상금은 2,100,000,000메소\n";
-    cout<<"2등 6개 중 5개 일치 + 1개 보너스 숫자 일치 :총 상금은 400,000,000메소\n";
-    cout<<"3등 5개 숫자 일치 (보너스 숫자 제외):총 상금은 70,000,000메소\n";
-    cout<<"4등 4개 숫자 일치 (보너스 숫자 제외):총 상금은 18,000,000메소\n";
-    cout<<"5등 3개 숫자 일치 (보너스 숫자 제외):총 상금은 500,000메소\n";
-    cout<<"6등 2개 숫자 일치 (보너스 숫자 제외):총 상금은 100,000메소\n";
-    cout<<"7등 1개 숫자 일치 (보너스 숫자 제외):총 상금은 15,000메소\n";
-    cout<<"8등 0개 숫자 일치 (보너스 숫자 제외):총 상금은 0메소\n";
+    cout<<"1등 6개 숫자 일치 (보너스 숫자 제외) : 상금은 "<<money[1]<<"메소\n";
+    cout<<"2등 6개 중 5개 일치 + 1개 보너스 숫자 일치 : 상금은 "<<money[2]<<"메소\n";
+    for(int i=3;i<=8;i++){
+        cout<<i<<"등 "<<8-i<<"개 숫자 일치(보너스 숫자 제외): 상금은 "<<money[i]<<"메소\n";
+    }
     line();
 }
 //실제 수령 상금 출력
-void Lotto(UserLotto user){
-    switch(user.grade){
-        case 1:
-            cout<<"1등(총 상금 2,100,000,000메소):";
-            break;
-        case 2:
-            cout<<"2등(총 상금 400,000,000메소):";
-            break;
-        case 3:
-            cout<<"3등(총 상금 70,000,000메소):";
-            break;
-        case 4:
-            cout<<"4등(총 상금 18,000,000메소):";
-            break;
-        case 5:
-            cout<<"5등(총 상금 500,000메소):";
-            break;
-        case 6:
-            cout<<"6등(총 상금 100,000메소):";
-            break;
-        case 7:
-            cout<<"7등(총 상금 15,000메소):";
-            break;
-        case 8:
-            cout<<"8등(총 상금 0메소):";
-            break;
-    }
-    //당첨되면
-    if(user.grade>=1 && user.grade<=8){
-        cout<<"\n NO "<<user.pos<<" : ";
-        user.lotto.lottprn();
-    }
+ll Lotto(UserLotto user){
+    cout<<user.grade<<"등 (상금 "<<money[user.grade]<<"메소)";
+    cout<<"\n NO "<<user.pos<<" : ";
+    user.lotto.lottprn();
+    return money[user.grade];
 }
+
 //응모한 당첨번호와 일치되는 개수로 등수를 구함
 void counts(vector<UserLotto> user, LottoGenerator lotto){
+    ll total_money = 0;//총 수령액
     int matchingcount;//일치하는 개수 
     vector<int>::iterator num1,num2;
     //1~userCount번까지의 유저의 입력
@@ -166,8 +141,9 @@ void counts(vector<UserLotto> user, LottoGenerator lotto){
             default:
                 user[i].grade = 0;
         }
-        Lotto(user[i]);
+        total_money+=Lotto(user[i]);
     }
+    cout<<"총 수령액 : "<<total_money<<"메소\n";
 }
 
 int main(){
