@@ -159,9 +159,9 @@ int main(){
     
     cout<<"응모한 번호 \n";
     line();
-    for(int i=0;i<userCount;i++){
+    for(int i=1;i<=userCount;i++){
         UserLotto uselotto;
-        uselotto.pos=i+1;
+        uselotto.pos=i;
         cout<<" NO "<<uselotto.pos<<" : ";
         uselotto.lotto.lottprn();
         user.push_back(uselotto);
