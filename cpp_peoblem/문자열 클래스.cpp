@@ -17,8 +17,12 @@ public:
     int capacity() const;//메모리 용량 리턴
     void print() const;//출력
     MyString& assign(const char* str);//문자열 대입
-    MyString& insert(int loc, const MyString& str);//문자열 삽입
+
     char at(int i) const;//임의 위치의 문자 출력
+
+    MyString& insert(int loc, const MyString& str);//문자열 삽입
+    MyString& insert(int loc, const char* str);//문자열 삽입
+    MyString& insert(int loc, const char c);//문자열 삽입
 };
 
 //생성자
@@ -100,7 +104,7 @@ MyString& MyString::insert(int loc, const MyString& str) {
         }
 
         //나머지 뒷부분 목사
-        for (int i = loc; i < string_length; i++) {
+        for (int i=0; i < string_length; i++) {
             string_content[str.string_length+i] = prev_string_content[i];
         }
 
@@ -123,6 +127,18 @@ MyString& MyString::insert(int loc, const MyString& str) {
     string_length = string_length + str.string_length;
     return *this;
 }
+
+//문자열 삽입
+MyString& MyString::insert(int loc, const char* str) {
+    MyString temp(str);
+    return insert(loc, temp);
+}
+//문자열 삽입
+MyString& MyString::insert(int loc, char c) {
+    MyString temp(c);
+    return insert(loc, temp);
+}
+
 //i번에 있는 문자 출력
 char MyString::at(int i) const {
     if (i >= string_length || i < 0) return NULL;
@@ -132,6 +148,7 @@ char MyString::at(int i) const {
 int main() {
     MyString str1("hello world");
     MyString str2(str1);
+    MyString str3("circle");
 
     str1.print();
     cout<<str2.length()<<"\n";
@@ -140,6 +157,8 @@ int main() {
     str1.print();
     cout<<" : " << str1.capacity() << "\n";
     str1.assign("cube");
+    str3.insert(3, str1);
     cout << str1.at(3) << "\n";//3번째 문자 출력
+    str3.print();
     return 0;
 }
