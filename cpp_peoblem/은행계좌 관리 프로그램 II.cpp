@@ -15,6 +15,7 @@ private:
 public:
 	Account(int ID, int money, char* name) :accID(ID), balance(money) {
 		cusName = new char[strlen(name) + 1];
+#pragma warning(disable:4996) // C4996 에러를 무시
 		strcpy(cusName,name);
 	}
 	int GetAccID() { return accID; }//계좌번호
