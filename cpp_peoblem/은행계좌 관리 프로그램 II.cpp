@@ -18,6 +18,11 @@ public:
 #pragma warning(disable:4996) // C4996 에러를 무시
 		strcpy(cusName,name);
 	}
+	//깊은 복사(포인터가 가리키는 대상까지 복사)
+	Account(const Account & ref) :accID(ref.accID), balance(ref.balance) {
+		cusName = new char[strlen(ref.cusName) + 1];
+		strcpy(cusName, ref.cusName);
+	}
 	int GetAccID() { return accID; }//계좌번호
 	void Deposit(int money) {//입금
 		balance += money;
