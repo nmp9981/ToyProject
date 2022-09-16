@@ -23,7 +23,7 @@ public:
 		cusName = new char[strlen(ref.cusName) + 1];
 		strcpy(cusName, ref.cusName);
 	}
-	int GetAccID() { return accID; }//계좌번호
+	int GetAccID() const { return accID; }//계좌번호
 	void Deposit(int money) {//입금
 		balance += money;
 	}
@@ -32,7 +32,7 @@ public:
 		balance -= money;
 		return money;
 	}
-	void AccountPrint();//현황
+	void AccountPrint() const;//현황
 	~Account() {
 		delete[]cusName;
 	}
@@ -99,7 +99,7 @@ void MinusMoney() {
 	cout << "유효하지 않은 ID입니다.\n";
 }
 //출력
-void Account::AccountPrint() {
+void Account::AccountPrint() const {
 	cout << "계좌ID : " << accID << "\n";
 	cout << "이 름 : " << cusName << "\n";
 	cout << "잔 액 : " << balance << "\n";
