@@ -9,8 +9,8 @@ private:
 	int xpos, ypos;
 public:
 	Point(int x = 0, int y = 0) : xpos(x), ypos(y) {}
-	Point operator+(const Point& pos) const {
-		return Point(xpos + pos.xpos, ypos + pos.ypos);
+	Point operator+(const Point& pos) const {//Point객체에 대한 + 연산자 오버로딩
+		return Point(xpos + pos.xpos, ypos + pos.ypos);//Point형 임시객체를 생성과 동시에 반환
 	}
 	friend ostream& operator<<(ostream& os, const Point& pos);
 };
@@ -33,7 +33,7 @@ int main() {
 	cin.tie(0);
 	
 	Adder adder;
-	cout << adder(64, 36)<<"\n";
-	cout << adder(Point(3, 4), Point(7, 9));
+	cout << adder(64, 36)<<"\n";//객체를 함수처럼
+	cout << adder(Point(3, 4), Point(7, 9));//함수 호출문에서 임시객체 생성가능
 	return 0;
 }
