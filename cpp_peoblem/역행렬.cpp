@@ -8,19 +8,20 @@ private:
 	double M[maxi][2*maxi];//행렬
 	bool isInverse;//역행렬 존재 여부
 public:
-	Matrix() {//생성자
-		n = 0;
-		isInverse = true;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < 2 * n; j++) M[i][j] = 0;
-		}
-	}
+	Matrix();//생성자
 	void input();//입력
 	bool IsInverse();//역행렬 존재 여부
 	void Gause();//가우스 소거법
 	void output();//출력
 };
-
+//생성자
+Matrix::Matrix() {
+	n = 0;
+	isInverse = true;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < 2 * n; j++) M[i][j] = 1;
+	}
+}
 //입력
 void Matrix::input() {
 	cin >> n;
@@ -52,13 +53,14 @@ void Matrix::Gause() {
 	for (int j = 0; j < n; j++) {//각 열에 대해
 		//M[j][j] = 1로 만들기, 계산 기준 행
 		for (int k = 0; k < 2*n; k++) {//M[j][j]로 나누기
-			M[j][k] = M[j][k] / M[j][j];
+			if(M[j][j]!=0) M[j][k] = M[j][k] / M[j][j];
 		}
 		//나머지 행
 		for (int i = 0; i < n; i++) {//각 행을 검사
 			if (i == j) continue;//이미 j행은 계산 완료
+			float mul = M[i][j];//곱하는 수
 			for (int k = 0; k < 2 * n; k++) {
-				M[i][k] = -1*M[i][j]*M[j][k] + M[i][k];//행 연산
+				M[i][k] = (-1.0)*mul*M[j][k] + M[i][k];//행 연산
 			}
 		}
 		//0행렬 검사
@@ -70,7 +72,7 @@ void Matrix::Gause() {
 }
 //출력
 void Matrix::output() {
-	if (isInverse == false) cout << "nor Inverse";
+	if (isInverse == false) cout << "no Inverse";
 	else {
 		for (int i = 0; i < n; i++) {
 			for (int j = n; j < 2*n; j++) {
@@ -86,8 +88,8 @@ int main() {
 	cin.tie(0);
 
 	Matrix matrix;
-	matrix.input();
-	matrix.Gause();
-	matrix.output();
+	matrix.input();//입력
+	matrix.Gause();//가우스 소거법
+	matrix.output();//출력
 	return 0;
 }
