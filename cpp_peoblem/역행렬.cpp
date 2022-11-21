@@ -52,8 +52,9 @@ bool Matrix::IsInverse() {
 void Matrix::Gause() {
 	for (int j = 0; j < n; j++) {//각 열에 대해
 		//M[j][j] = 1로 만들기, 계산 기준 행
+		double div = M[j][j];
 		for (int k = 0; k < 2*n; k++) {//M[j][j]로 나누기
-			if(M[j][j]!=0) M[j][k] = M[j][k] / M[j][j];
+			if(div!=0) M[j][k] = M[j][k] / div;
 		}
 		//나머지 행
 		for (int i = 0; i < n; i++) {//각 행을 검사
