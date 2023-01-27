@@ -194,27 +194,25 @@ bigInt bigInt::operator*(const bigInt& n) {
     for (int i = res.size() - 1; i >= 0; i--) ans.number += res[i];
     return ans;
 }
-// / (n1/n2)
+// / (n1/n2), 몫 구하기
 bigInt bigInt::operator/(const bigInt& n) {
     bigInt ans;//최종 결과
     string n1 = this->number;//나눠야하는 수
     bigInt n2 = n.number;//나누는 수
     int n1_size = n1.size();//n1의 자릿수
 
-    //0으로 나눔
-    if (n2.number == "0") return ans.number = "INF\n";
-   
-    //몫이 0
-    if ((bigInt)n1 < n2) return (bigInt)"0";//bigInt형으로 캐스팅
-    //몫이 존재
+    if (n2.number == "0") return ans.number = "INF\n";//0으로 나눔
+    if ((bigInt)n1 < n2) return ans.number = "0";//몫이 0
+
+    //몫이 존재, 초등학교 알고리즘 적용
     string share = "";//몫
-    string divided;  
-    bigInt dividNum = bigInt("0");
+    string divided; bigInt dividNum; bigInt ten;
+    dividNum.number = "0";
     for(int i=0;i<n1_size;i++) {
         divided = n1[i];//나눗셈을 진행할 문자열
-        bigInt ten = bigInt("10");//10
+        ten.number = "10";//10
         dividNum = dividNum * ten + (bigInt)(divided);//나누어지는 수
-        if (dividNum < n2) continue;//나눌 수 없음
+        if (dividNum < n2) share+=to_string(0);//0 출력
         else {//나눌 수 있음
             int minusCount = 0;
             while (true) {
@@ -225,7 +223,15 @@ bigInt bigInt::operator/(const bigInt& n) {
             share += to_string(minusCount);//몫 구하기
         }
     }
-    ans.number = share;//정답
+    //출력
+    int frontZero = 0;//맨 앞이 0
+    for (int i = 0; i < share.size(); i++) {
+        if (share[i] != '0') {
+            frontZero = i;
+            break;
+        }
+    }
+    ans.number = share.substr(frontZero);//정답
     return ans;
 }
 int main()
