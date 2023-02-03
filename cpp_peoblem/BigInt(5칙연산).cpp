@@ -235,8 +235,7 @@ bigInt bigInt::operator/(const bigInt& n) {
     ans.number = share.substr(frontZero);//정답
     return ans;
 }
-
-// / (n1%n2), 나머지 구하기
+//% (n1%n2), 나머지 구하기
 bigInt bigInt::operator%(const bigInt& n) {
     bigInt ans;//최종 결과
     string n1 = this->number;//나눠야하는 수
