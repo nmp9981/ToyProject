@@ -16,7 +16,7 @@ House::House(int n,int s){
 }
 //소멸자
 House::~House(){
-    cout<<numOfRooms<<" "<<size<<"소멸\n";b->c->a->a소멸->d->d소멸->c소멸->b소멸 
+    cout<<numOfRooms<<" "<<size<<"소멸\n";//b->c->a->a소멸->d->d소멸->c소멸->b소멸 
 }
 void f(){
     House a(2,20);
